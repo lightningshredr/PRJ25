@@ -1,6 +1,8 @@
 #include  "PRJ25.h"
 void setup() {
   PRJ25();
+  Serial.begin(9600);
+
 }
 
 void loop() 

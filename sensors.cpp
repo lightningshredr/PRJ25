@@ -10,13 +10,19 @@ long PRJ25::getDistance(){
   return cm;
 }
 bool PRJ25::ballLoaded(){
+  digitalWrite(limS,LOW);
+  int ct = 0;
+  while(ct<3)
+  {
+    delay(10);
   if(digitalRead(limS) == HIGH)
     {
-      delay(200);
-      if(digitalRead(limS) == HIGH){
-        return true;
-        cycle++;
-      }
+      ct=0;
+      return false;
     }
-  return false;
+    else{
+      ct++;
+    }
+  }
+  return true;
 }
