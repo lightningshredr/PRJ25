@@ -1,40 +1,39 @@
 #include  "PRJ25.h"
-void setup() {
-  PRJ25();
-  Serial.begin(9600);
 
+PRJ25 car;
+
+void setup() {
+  car.setup();
+  Serial.begin(9600);
 }
 
 void loop() 
-{
-  int count = 0;
-  long starting = car.getDistance();
-  while(!car.ballLoaded()){
-    delay(100);
-  }
-  car.forward();
-  if(car.getDistance()<(2*2.54)){
-    car.stop();
+{ 
+    car.setMaxDist();
+    delay(10);
     while(car.ballLoaded()){
-    car.armForward();
-    delay(50);
-    car.armBrake();
-    delay(300);
-    count++;
+      delay(1);
     }
-    car.armBackward();
-    delay(50*count);
+    //car.vectorf(car.getDistance(),2,car.getMaxDist());
+    
+    while(car.getDistance() >= 28 ){
+      //car.forward(160);
+      car.vectorf(car.getDistance(),2,car.getMaxDist());
+      }
+    
+    car.stop();
+    delay(300);
+    //car.armForward(92);
+    car.armForward(255);
+    delay(150);
     car.armBrake();
-  }
-  car.backwardDist(6*12.0*2.54);
-  if(car.getDistance()<starting-0.25){
-    car.backward();
-    delay(50);
+    delay(600);
+    car.armBackward(60);
+    delay(200);
+    while(car.getDistance()<= car.getMaxDist()-0.006){
+      car.backward(255);
+    }
+    car.backward(255);
+    delay(2500);
     car.stop();
-  }
-  if(car.getDistance()>starting+0.25){
-    car.forward();
-    delay(50);
-    car.stop();
-  }
 }

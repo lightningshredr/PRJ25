@@ -13,39 +13,42 @@
 #define BIN1 8
 #define STBY 3
 
-//for drv885 
+//for drv8855 
 /*
 #define enA 5
 #define enB 6
 #define phA 8
 #define phB 7
 */
-
-
 //limit switch
 #define limS  11
 
-class PRJ25
-{
+//meters per second ~estimated, need to test
+#define VMAX 30
+
+class PRJ25 {
   public:
-    PRJ25(void);
-    void  forward();
-    void  backward();
+    void setup();
+    void  forward(int speed);
+    void  backward(int speed);
     void  stop();
-    void  armForward();
-    void  armBackward();
+    void  armForward(int speed);
+    void  armBackward(int speed);
     void  armBrake();
+    int  vectorf(long p,long i, long d);
+    int  vectorb(long k, long d);
     long  getDistance();
     bool  ballLoaded();
-    bool  forwardDist(long dist);
-    bool  backwardDist(long dist);
-    long  getRealDist();
+    long  getMinDist();
+    long  getMaxDist();
+    void  setMaxDist();
     int cycle = 0;
+    bool s = true;
   private:
-    //starting line distance in cm
-    long realDist = 25.4*6*12;
+    long maxDist;
+    //minimum distance in m
+    long minDist;
 };
 
-extern PRJ25 car;
-
+//extern PRJ25 car;
 #endif
